@@ -5,15 +5,14 @@
 #ifndef HUFFMAN_COMPRESS_HUFFMAN_H
 #define HUFFMAN_COMPRESS_HUFFMAN_H
 
-#include "sort.h"
-#include "myVector.h"
+
 #include <iostream>
 #include <fstream>
 #include <limits.h>
-#include <math.h>
 #include <bitset>
 #include <stack>
 #include <queue>
+#include "Heap.h"
 using namespace std;
 
 typedef struct huffcode{
@@ -22,36 +21,32 @@ typedef struct huffcode{
     int length;
 }huffCode;
 
+class treeNode{
+public:
+    double times;
+    int ch;
+    treeNode *ltree;
+    treeNode *rtree;
+    bool operator<(const treeNode &t){
+        return this->times < t.times;
+    }
+    bool operator>(const treeNode &t){
+        return this->times > t.times;
+    }
+};
+
 class Huffman{
 public:
     Huffman(void);
-    Huffman(string str);
-    void saveTree();
-    void preTravel(treeNode *root,ofstream *outFile);
-    void midTravel(treeNode *root,ofstream *outFile);
-    void generateCode(treenode *root,char *code,int length);
-    void decompress(string inPath,string outPath);
+    void generateCode(treeNode *root,char *code,int length);
     void huffCode_gene();
-    void save_code();
     void print();
-    void compress(string str,string str1);
 private:
     treeNode *root;
     huffCode *arra;
-    string filePath;
-    string outPath;
-    myVector array;
-    int tree_length;
     int size;
     double counts[128];
     queue<bool> huffcode[128];
-    void resetTree();
-    void replaceNode(treeNode *root);
-    void compressCode(ofstream *outFile,int index);
-    void decode(unsigned char code,int times);
-    unsigned char exchangeCode();
-    void build_tree(treeNode *root,int *pre_s,int *mid_s,int start,int root_p,int end);
-    void find_root(int *root_p,int *pre_s,int *mid_s,int start,int end);
-    char huffSearch();
+    treeNode *data;
 };
 #endif //HUFFMAN_COMPRESS_HUFFMAN_H
