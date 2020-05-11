@@ -25,6 +25,7 @@ Sort::Sort() {
     for(int i=0;i<num;i++)
         cin>>array[i];
     Heap h(array,num);
+    h.print();
     while(!h.empty()){
         cout<<h.removeMax()<<" ";
     }

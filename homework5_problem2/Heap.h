@@ -10,6 +10,7 @@ public:
     Heap(int *array,int num);
     int removeMax();
     bool empty();
+    void print();
 private:
     int *array;
     int num;
@@ -41,6 +42,11 @@ bool Heap::empty() {
     return !num;
 }
 
+void Heap::print(){
+    for(int i=0;i<num;i++)
+        std::cout<<array[i]<<" ";
+    std::cout<<std::endl;
+}
 void Heap::shiftDown(int start){
     int max,temp;
     while(start*2+1<num){

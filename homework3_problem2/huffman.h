@@ -16,7 +16,7 @@
 using namespace std;
 
 typedef struct huffcode{
-    int ch;
+    char ch;
     char code[1000];
     int length;
 }huffCode;
@@ -24,7 +24,7 @@ typedef struct huffcode{
 class treeNode{
 public:
     double times;
-    int ch;
+    char ch;
     treeNode *ltree;
     treeNode *rtree;
     bool operator<(const treeNode &t){

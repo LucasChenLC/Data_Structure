@@ -24,11 +24,11 @@ Huffman::Huffman(void) {
             data[num].rtree = NULL;
             num++;
         }
-    miniHeap<treeNode> array(data,size);
+    miniHeap<treeNode> heap(data,size);
         treeNode mini_1,mini_2,*min1,*min2;
     for(int a=0;a<size-1;a++){
-        mini_1 = array.removeMini();
-        mini_2 = array.removeMini();
+        mini_2 = heap.removeMini();
+        mini_1 = heap.removeMini();
         min1 = (treeNode *)malloc(sizeof(treeNode));
         *min1=mini_1;
         min2 = (treeNode *)malloc(sizeof(treeNode));
@@ -36,10 +36,10 @@ Huffman::Huffman(void) {
         mini_2.ltree = min1;
         mini_2.rtree = min2;
         mini_2.times = mini_2.rtree->times + mini_2.ltree->times;
-        array.insert(mini_2);
+        heap.insert(mini_2);
     }
         root = (treeNode *)malloc(sizeof(treeNode));
-        *root = array.removeMini();
+        *root = heap.removeMini();
         for(double & count : counts)
             count/=strlen(str);
     return;

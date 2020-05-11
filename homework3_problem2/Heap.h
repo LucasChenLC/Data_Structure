@@ -17,7 +17,7 @@ public:
     void insert(T n);
     void print();
 private:
-    T *array;
+    T array[20];
     T *temp;
     int num;
     void shiftDown(int start);
@@ -26,7 +26,7 @@ private:
 
 template <class T>
 miniHeap<T>::miniHeap(T *array, int num) {
-    this->array = (T *)malloc(num*sizeof(T));
+   // this->array = (T *)malloc(num*sizeof(T));
     for(int i=0;i<num;i++)
         this->array[i] = array[i];
     this->num = num;
@@ -89,6 +89,7 @@ void miniHeap<T>::shiftUp(int start) {
         temp = array[start];
         array[start] = array[(start-1)/2];
         array[(start-1)/2] = temp;
+        start = start/2-1;
     }
 }
 
