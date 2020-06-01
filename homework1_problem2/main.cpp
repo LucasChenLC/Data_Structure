@@ -24,18 +24,15 @@ void josephusLinkList(int n,int s,int m){
         t->next=x;
         t=t->next;
     }
-    head=head->next;
-    t->next=head;
-    t=head;
+   t->next = head->next;
+    while(t->next->data!=s)
+        t = t->next;
 
-    for(;t->next->data!=(s+m-1)%n;t = t->next){}
-
-    //开始解题
-    while(t->next!=t) {
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m-1;j++){
+           t = t->next;
+        }
         cout<<t->next->data<<" ";
-        t->next=t->next->next;
-        for(int i=0;i<m-1;i++)
-            t=t->next;
+        t->next = t->next->next;
     }
-    cout<<t->data;
 }
