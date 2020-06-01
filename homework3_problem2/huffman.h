@@ -12,6 +12,9 @@
 #include <bitset>
 #include <stack>
 #include <queue>
+#include <memory.h>
+#include <cstring>
+#include <iomanip>
 #include "Heap.h"
 using namespace std;
 

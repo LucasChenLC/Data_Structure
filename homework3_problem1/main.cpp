@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include <stack>
 using namespace std;
 
