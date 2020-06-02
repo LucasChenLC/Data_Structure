@@ -20,7 +20,7 @@ private:
     char oriExpression[100];
     int length;
     Node *root;
-    flagNode flag[10];
+    flagNode *flag;
     void preSwitch();
     void inSwitch();
     void postSwitch();
@@ -50,7 +50,7 @@ int main() {
 Expression::Expression(int mode){
     cin>>oriExpression;
     length = strlen(oriExpression);
-    //flag = (flagNode *)malloc(length*sizeof(flagNode));
+    flag = (flagNode *)malloc(length*sizeof(flagNode));
     for(int i=0;i<length;i++){
         flag[i].visit = false;
         flag[i].tRoot = (Node *)malloc(sizeof(Node));
