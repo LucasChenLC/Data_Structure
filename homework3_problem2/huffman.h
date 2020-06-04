@@ -48,6 +48,7 @@ private:
     treeNode *root;
     huffCode *arra;
     int size;
+    int length;
     double counts[128];
     queue<bool> huffcode[128];
     treeNode *data;
