@@ -33,7 +33,6 @@ int Heap::removeMax() {
     int ans = array[0];
     num--;
     array[0] = array[num];
-
     shiftDown(0);
     return ans;
 }

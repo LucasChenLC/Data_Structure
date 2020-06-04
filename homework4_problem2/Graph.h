@@ -9,6 +9,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <stack>
+#include <climits>
 #include "Vertex.h"
 #include "Edge.h"
 using namespace std;
