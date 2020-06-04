@@ -1,5 +1,5 @@
 #include <iostream>
-#include <cstring>
+#include <string>
 #include <stack>
 using namespace std;
 
@@ -15,26 +15,26 @@ typedef struct flagnode{
 }flagNode;
 
 class Expression{
+public:
+    Expression(int mode);
+    void preprint();
+    void inprint();
+    void postprint();
 private:
-    stack<char> operate;
-    char oriExpression[100];
+    stack<int> operate;
+    string oriExpression;
     int length;
     Node *root;
     flagNode *flag;
     void preSwitch();
     void inSwitch();
     void postSwitch();
-    void buildTree(char temp);
+    void buildTree(int p);
     void pre(Node *root);
     void in(Node *root);
     void post(Node *root);
     void clearFlag(Node *root);
     int rootPos;
-public:
-    Expression(int mode);
-    void preprint();
-    void inprint();
-    void postprint();
 };
 
 int main() {
@@ -49,36 +49,33 @@ int main() {
 
 Expression::Expression(int mode){
     cin>>oriExpression;
-    length = strlen(oriExpression);
-    flag = (flagNode *)malloc(length*sizeof(flagNode));
-    for(int i=0;i<length;i++){
+    length = oriExpression.length();
+    flag = (flagNode *)malloc(length * sizeof(flagNode));
+    for(int i=0;i < length;i++){
         flag[i].visit = false;
         flag[i].tRoot = (Node *)malloc(sizeof(Node));
         flag[i].tRoot->operate = oriExpression[i];
         flag[i].tRoot->lTree = NULL;
         flag[i].tRoot->rTree = NULL;
     }
-    if(mode==1){
+    if(mode == 1)
         preSwitch();
-    }
-    else if(mode==2){
+    else if(mode == 2)
         inSwitch();
-    }
-    else{
+    else
         postSwitch();
-    }
 }
 
 void Expression::preSwitch() {
-    for(int i=0;i<length;i++) {
-        if(oriExpression[i]>='0'&&oriExpression[i]<='9'){
+
+    for (int i = 0; i < length; i++)
+        if(oriExpression[i] >= '0' && oriExpression[i] <= '9')
             flag[i].visit = true;
-        }
-    }
+
     int p=length-1,p1,p2;
     while(!flag[0].visit){
         while(true){
-            if((oriExpression[p]<'0'||oriExpression[p]>'9')){
+            if(oriExpression[p] < '0' || oriExpression[p] > '9'){
                 for(p1=p+1;!flag[p1].visit;p1++){}
                 for(p2=p1+1;!flag[p2].visit;p2++){}
                 break;
@@ -112,14 +109,14 @@ void Expression::clearFlag(Node *root) {
 }
 void Expression::inSwitch() {
     Node *n;
-    char temp;
+    int temp;
     for(int i=0;i<length;i++){
         if(oriExpression[i]>='0'&&oriExpression[i]<='9'){}
         else if(oriExpression[i]=='('){
-            operate.push(oriExpression[i]);
+            operate.push(i);
         }
         else if(oriExpression[i]==')'){
-            while(operate.top()!='('){
+            while(oriExpression[operate.top()] != '('){
                 temp = operate.top();
                 operate.pop();
                 buildTree(temp);
@@ -127,8 +124,8 @@ void Expression::inSwitch() {
             operate.pop();
         }
         else if(oriExpression[i]=='*'||oriExpression[i]=='/'){
-                while(!operate.empty()&&operate.top()!='('){
-                    if(operate.top()=='+'||operate.top()=='-')
+                while(!operate.empty() && oriExpression[operate.top()] != '('){
+                    if(oriExpression[operate.top()] == '+'|| oriExpression[operate.top()] == '-')
                         break;
                     else{
                         temp = operate.top();
@@ -136,15 +133,15 @@ void Expression::inSwitch() {
                         buildTree(temp);
                     }
                 }
-                    operate.push(oriExpression[i]);
+                    operate.push(i);
         }
         else if(oriExpression[i]=='+'||oriExpression[i]=='-'){
-                while(!operate.empty()&&operate.top()!='('){
+                while(!operate.empty() && oriExpression[operate.top()] != '('){
                     temp = operate.top();
                     operate.pop();
                     buildTree(temp);
                 }
-                operate.push(oriExpression[i]);
+                operate.push(i);
         }
     }
     while(!operate.empty()){
@@ -181,9 +178,7 @@ void Expression::postSwitch() {
     root = flag[length-1].tRoot;
 }
 
-void Expression::buildTree(char temp) {
-    int p;
-    for(p=0;oriExpression[p]!=temp;p++){}
+void Expression::buildTree(int p) {
     rootPos = p;
     for(int i=p-1;i>=0;i--){
         if(!flag[i].visit && oriExpression[i]!='(' && oriExpression[i]!=')'){
